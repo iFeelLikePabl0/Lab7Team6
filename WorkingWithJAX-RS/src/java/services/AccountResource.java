@@ -49,6 +49,8 @@ public class AccountResource {
     {
         
     }
+    
+    private void createUserJson
 
     /**
      * PUT method for updating or creating an instance of AccountResource
