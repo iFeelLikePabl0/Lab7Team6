@@ -47,12 +47,7 @@ public class AccountResource {
     public AccountResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of services.AccountResource
-     * @return an instance of java.lang.String
-     */
     @GET
-    @Path("getUser")
     @Produces("text/html")
     public String getUsers() throws FileNotFoundException {
         String userString = "";
@@ -106,11 +101,6 @@ public class AccountResource {
         jsonWriter.close();
     }
 
-    /**
-     * PUT method for updating or creating an instance of AccountResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
     @PUT
     @Path("updateUser")
     @Consumes("text/html")
@@ -133,6 +123,5 @@ public class AccountResource {
             users.add(user);
         }
         return users;
-    }
-    
+    }  
 }
