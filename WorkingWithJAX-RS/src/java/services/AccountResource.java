@@ -67,21 +67,21 @@ public class AccountResource {
     @DELETE
     @Path("deleteUser")
     @Consumes("text/html")
-    public String deleteUser(String content)
+    public void deleteUser(String content)
     {
-        return "";
+        
     }
     
-    @POST
+    @PUT
     @Path("createUser")
     @Consumes("text/html")
-    private void createUserJson(@QueryParam ("User Name")String newUsername, @QueryParam ("Password")String password) throws FileNotFoundException
+    public void createUserJson(String newUsername) throws FileNotFoundException
     {
         OutputStream outputStream = null;
         //get existing users
         ArrayList<User> userList = getUserList();
         //initialize new user
-        User user1 = new User(newUsername, password);
+        User user1 = new User(newUsername, "password");
         //add user to list
         userList.add(user1);
         //initialize jsonArrayBuilder
