@@ -74,7 +74,8 @@ public class Main {
                     userInput2 = input.nextLine();
                     System.out.print("Enter a new password...");
                     userInput2 = input.nextLine();
-                    
+                    clientAPI.updateUser(userInput1, userInput2, userInput3);
+                    break;
                 default:                
                     System.out.println("Incorrect input.");
             }

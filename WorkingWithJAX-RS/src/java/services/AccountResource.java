@@ -136,6 +136,7 @@ public class AccountResource {
         for (User user : users) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 user.setPassword(newPassword);
+                System.out.println(user.getUserName()+" "+user.getPassword());
             }
         }
         
