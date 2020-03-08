@@ -67,12 +67,15 @@ public class AccountResource {
         String password = parts[1];
         
         ArrayList<User> users = getUserList();
+        System.out.println(users.toString());
+        
         for (User user : users) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 users.remove(user);
             }
         }
         
+        System.out.println(users.toString());
     }
     
     @PUT
@@ -116,20 +119,24 @@ public class AccountResource {
     
     private ArrayList<User> getUserList() throws FileNotFoundException, IOException, ClassNotFoundException
     {
+        ArrayList<User> users = new ArrayList<User>();
+        
         try {
             FileInputStream fis = new FileInputStream("users.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            ArrayList<User> users = (ArrayList<User>) ois.readObject();
-            ois.close();
-
-            return users;
+            try {
+                while(true) {
+                    User user = (User) ois.readObject();
+                    users.add(user);
+                }
+            } catch (Exception e) {
+                ois.close();
+                return users;
+            }
         } catch (FileNotFoundException fnfe) {
             File f = new File("users.ser");
-            
-            ArrayList<User> users = new ArrayList<User>();
             return users;
         }
-
     }  
 }
