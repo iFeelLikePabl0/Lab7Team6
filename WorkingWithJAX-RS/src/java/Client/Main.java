@@ -22,7 +22,7 @@ public class Main {
         //create new clientAPI instance
         Main main = new Main();
         main.clientAPI = new ClientAPI();
-        while (true) {
+        while(true) {
             int type = main.acceptInputType();
             main.acceptInput(type);
             main.displayResponse();
@@ -30,8 +30,7 @@ public class Main {
         
     }
     
-    private int acceptInputType()
-    {
+    private int acceptInputType() {
         //Display message asking for user input
         System.out.println("What would you like to do?");
         System.out.println("Press 0 to create a new user profile.");
@@ -44,8 +43,7 @@ public class Main {
         return Integer.parseInt(userInput);
     }
     
-    public void acceptInput(int inputType)
-    {
+    public void acceptInput(int inputType) {
         try {
             String userInput1 = "";
             String userInput2 = "";
@@ -84,8 +82,7 @@ public class Main {
         }
     }
     
-    private void displayResponse()
-    {
+    private void displayResponse() {
         
     }
 }

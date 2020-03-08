@@ -20,13 +20,11 @@ import java.util.Scanner;
  */
 public class ClientAPI {
     
-    public ClientAPI()
-    {
+    public ClientAPI(){
         
     }
     
-    public void createUser(String userName, String password) throws MalformedURLException, IOException
-    {
+    public void createUser(String userName, String password) throws MalformedURLException, IOException {
         String user = userName+" "+password;
 
         //Create a new String with the website address to connect to
@@ -66,8 +64,7 @@ public class ClientAPI {
         }
     }
     
-    public void deleteUser(String userName, String password) throws MalformedURLException, IOException
-    {
+    public void deleteUser(String userName, String password) throws MalformedURLException, IOException {
         String user = userName+" "+password;
         //Create a new String with the website address to connect to
         String query = "http://localhost:8080/WorkingWithJAX-RS/webresources/Account/deleteUser";
@@ -104,8 +101,7 @@ public class ClientAPI {
         }
     }
     
-    public void updateUser(String userName, String oldPassword, String newPassword) throws MalformedURLException, ProtocolException, IOException
-    {
+    public void updateUser(String userName, String oldPassword, String newPassword) throws MalformedURLException, ProtocolException, IOException {
         String userUpdate = userName+" "+oldPassword+" "+newPassword;
         //Create a new String with the website address to connect to
         String query = "http://localhost:8080/WorkingWithJAX-RS/webresources/Account/updateUser";
