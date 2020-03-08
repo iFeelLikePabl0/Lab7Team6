@@ -8,26 +8,26 @@ package services;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import model.User;
 
 /**
@@ -75,30 +75,47 @@ public class AccountResource {
     @PUT
     @Path("createUser")
     @Consumes("text/html")
-    public void createUserJson(String newUsername) throws FileNotFoundException
+    public void createUserJson(String userNameAndPassword) throws FileNotFoundException, IOException
     {
-        OutputStream outputStream = null;
-        //get existing users
-        ArrayList<User> userList = getUserList();
-        //initialize new user
-        User user1 = new User(newUsername, "password");
-        //add user to list
-        userList.add(user1);
-        //initialize jsonArrayBuilder
-        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-        for(int i = 0; i < userList.size(); i++)
-        {
-            jsonArrayBuilder.add(
-                    Json.createObjectBuilder()
-                        .add("userName", userList.get(i).getUserName())
-                        .add("password", userList.get(i).getPassword())
-            );
-        }
-        JsonArray userArray = jsonArrayBuilder.build();
-        outputStream = new FileOutputStream("users.json");
-        JsonWriter jsonWriter = Json.createWriter(outputStream);
-        jsonWriter.writeArray(userArray);
+        String[] parts = userNameAndPassword.split(",");
+        String part1 = parts[0]; // user
+        String part2 = parts[1]; // password
+        
+        User user = new User(part1, part2);
+        
+        OutputStream os = new FileOutputStream("user.json");
+        JsonWriter jsonWriter = Json.createWriter(os);
+        jsonWriter.writeObject((JsonObject) Json.createObjectBuilder()
+                .add("userName", user.getUserName())
+                .add("password", user.getPassword()));
+        
+        os.close();
         jsonWriter.close();
+        
+        System.out.println(part1 + " " + part2);
+        
+//        OutputStream outputStream = null;
+//        //get existing users
+//        ArrayList<User> userList = getUserList();
+//        //initialize new user
+//        User user1 = new User(newUsername, "password");
+//        //add user to list
+//        userList.add(user1);
+//        //initialize jsonArrayBuilder
+//        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+//        for(int i = 0; i < userList.size(); i++)
+//        {
+//            jsonArrayBuilder.add(
+//                    Json.createObjectBuilder()
+//                        .add("userName", userList.get(i).getUserName())
+//                        .add("password", userList.get(i).getPassword())
+//            );
+//        }
+//        JsonArray userArray = jsonArrayBuilder.build();
+//        outputStream = new FileOutputStream("users.json");
+//        JsonWriter jsonWriter = Json.createWriter(outputStream);
+//        jsonWriter.writeArray(userArray);
+//        jsonWriter.close();
     }
 
     @PUT
