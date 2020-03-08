@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -75,25 +76,26 @@ public class AccountResource {
     @PUT
     @Path("createUser")
     @Consumes("text/html")
-    public void createUserJson(String userNameAndPassword) throws FileNotFoundException, IOException
+    @Produces("application/json")
+    public void createUserJson(String userNameAndPassword) throws FileNotFoundException, IOException 
     {
-        String[] parts = userNameAndPassword.split(",");
+        String[] parts = userNameAndPassword.split(" ");
         String part1 = parts[0]; // user
         String part2 = parts[1]; // password
+        System.out.println(part1 + " " + part2);
         
         User user = new User(part1, part2);
         
-        OutputStream os = new FileOutputStream("user.json");
-        JsonWriter jsonWriter = Json.createWriter(os);
-        jsonWriter.writeObject((JsonObject) Json.createObjectBuilder()
-                .add("userName", user.getUserName())
-                .add("password", user.getPassword()));
+        File f = new File("user.ser");
+        System.out.println(f.getAbsolutePath());
         
-        os.close();
-        jsonWriter.close();
+        FileOutputStream fout = new FileOutputStream(f);
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        oos.writeObject(user);
         
-        System.out.println(part1 + " " + part2);
-        
+        fout.close();
+        oos.close();
+
 //        OutputStream outputStream = null;
 //        //get existing users
 //        ArrayList<User> userList = getUserList();
