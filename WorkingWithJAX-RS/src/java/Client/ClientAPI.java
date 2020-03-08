@@ -106,7 +106,7 @@ public class ClientAPI {
     
     public void updateUser(String userName, String oldPassword, String newPassword) throws MalformedURLException, ProtocolException, IOException
     {
-        String userUpdate = userName+" "+oldPassword+","+newPassword;
+        String userUpdate = userName+" "+oldPassword+" "+newPassword;
         //Create a new String with the website address to connect to
         String query = "http://localhost:8080/WorkingWithJAX-RS/webresources/Account/updateUser";
         //Create a new URL object equal to the query above

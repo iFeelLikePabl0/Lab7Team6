@@ -76,6 +76,19 @@ public class AccountResource {
         }
         
         System.out.println(users.toString());
+        
+        File f = new File("users.ser");
+        System.out.println(f.getAbsolutePath());
+
+        FileOutputStream fout = new FileOutputStream(f);
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        
+        for(int i = 0; i < users.size(); i++) {
+            oos.writeObject(users.get(i));
+        }
+
+        fout.close();
+        oos.close();
     }
     
     @PUT
@@ -111,10 +124,33 @@ public class AccountResource {
     @POST
     @Path("updateUser")
     @Consumes("text/html")
-    public void putUser(String content) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public void updateUser(String userNamePasswordAndNewPassword) throws IOException, FileNotFoundException, ClassNotFoundException {
         ArrayList<User> users = getUserList();
         
+        String[] parts = userNamePasswordAndNewPassword.split(" ");
+        String userName = parts[0];     // user
+        String password = parts[1];     // password
+        String newPassword = parts[2];  // new password
+        System.out.println(userName + " " + password + " " + newPassword);
         
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                user.setPassword(newPassword);
+            }
+        }
+        
+        File f = new File("users.ser");
+        System.out.println(f.getAbsolutePath());
+
+        FileOutputStream fout = new FileOutputStream(f);
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        
+        for(int i = 0; i < users.size(); i++) {
+            oos.writeObject(users.get(i));
+        }
+
+        fout.close();
+        oos.close();
     }
     
     private ArrayList<User> getUserList() throws FileNotFoundException, IOException, ClassNotFoundException
@@ -139,4 +175,6 @@ public class AccountResource {
             return users;
         }
     }  
+    
+    
 }
